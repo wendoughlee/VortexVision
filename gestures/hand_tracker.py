@@ -29,14 +29,17 @@ while cap.isOpened():
             mp_draw.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
             x = hand_landmarks.landmark[0].x
+            
             if prev_x is not None:
                 delta_x = x - prev_x
                 if delta_x < -0.05:
                     print("Swipe Left")
                     send_gesture("swipe_left")
+                    prev_x = None
                 elif delta_x > 0.05:
                     print("Swipe Right")
                     send_gesture("swipe_right")
+                    prev_x = None
             prev_x = x
 
     cv2.imshow('Hand Tracking', frame)
